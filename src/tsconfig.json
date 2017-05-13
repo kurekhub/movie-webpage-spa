@@ -4,16 +4,12 @@
         "sourceMap": true,
         "noImplicitAny": true,
         "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "moduleResolution": "node",
         "module": "commonjs",
         "target": "es2015"
     },
-    "files": [
-        "./src/**/*"
-    ],
-    "include": [
-        "./src/**/*"
-    ],
     "exclude": [
-        "./build/"
+        "node_modules/"
     ]
 }

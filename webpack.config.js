@@ -1,42 +1,81 @@
 let { CheckerPlugin, TsConfigPathsPlugin } = require("awesome-typescript-loader");
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+let ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+let webpack = require("webpack");
 let path = require("path");
 
 let entryFilePath = path.resolve(__dirname, "src/main.ts");
 let vendorPath = path.resolve(__dirname, "src/vendor.ts");
 
 let buildPath = path.resolve(__dirname, "build")
-let buildFilename = "build.js"
 
 let config = {
     entry: {
         app: entryFilePath,
-        vendor: vendorPath
+        // vendor: vendorPath
     },
     output: {
         path: buildPath,
-        filename: buildFilename
+        publicPath: "http://localhost:8080",
+        filename: "build.js"
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx"]
+        extensions: [".ts", ".js"]
     },
     devtool: "source-map",
+    devServer: {
+        contentBase: path.join(__dirname, "build"),
+        historyApiFallback: true,
+        stats: "verbose"
+    },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.tsx?$/,
-                loader: "awesome-typescript-loader",
+                use: [
+                    {
+                        loader: "awesome-typescript-loader",
+                        options: {
+                            configFileName: "./src/tsconfig.json"
+                        },
+
+                    },
+                    {
+                        loader: "angular2-template-loader"
+                    }
+                ],
                 exclude: [
                     path.resolve(__dirname, "node_modules")
                 ],
-                options: {
-                    configFileName: "./src/tsconfig.json"
-                }
             },
+            {
+                test: /\,html$/,
+                loader: "html-loader"
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    { loader: "style-loader" },
+                    { loader: "raw-loader" },
+                    { loader: "css-loader" }
+                ],
+                exclude: [
+                    path.resolve(__dirname, "./build/")
+                ]
+            }
         ]
     },
     plugins: [
+        new webpack.ContextReplacementPlugin(
+            /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+            __dirname
+        ),
         new TsConfigPathsPlugin(),
-        new CheckerPlugin()
+        new CheckerPlugin(),
+        new HtmlWebpackPlugin({
+            template: "./src/index.html"
+        })
     ]
 };
 
