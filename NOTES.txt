@@ -1,0 +1,22 @@
+Prawdopodobnie wszystko co jest w dependencies jest potrzebne do tego
+aby działał Angular2, trzeba to potestować
+
+Wczesniej byly pliki systemjs, ale doczytalem ze to mozna stosować 
+zamiast webpacka, wiec je usunałem.
+
+List of essential packages for Angular 2 (from documentation)
+    @angular/core
+    @angular/common
+    @angular/compiler
+    @angular/platform-browser
+    @angular/platform-browser-dynamic
+    @angular/http
+    @angular/router
+    @angular/upgrade
+    typescript
+
+    //polyfills
+    core-js
+    rxjs
+    zone.js
+
