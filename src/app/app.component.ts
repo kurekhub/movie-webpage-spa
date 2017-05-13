@@ -5,7 +5,8 @@ import { Component } from '@angular/core';
     template: `
         <p>Hello world {{ test }}</p>
         <p>To jest test</p>
-        <p>HURRA TO DZILA, WOW</p>
+        <p>HURRA TO DZIALA, WOW</p>
+        <p>Kolejny test</p>
         <p>W koncu sie udalo</p>
     `
 })

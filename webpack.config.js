@@ -11,7 +11,12 @@ let entryFilePath = path.resolve(__dirname, "src/main.ts");
 let vendorPath = path.resolve(__dirname, "src/vendor.ts");
 let polyfillsPath = path.resolve(__dirname, "src/polyfills.ts");
 
-let buildPath = path.resolve(__dirname, "build")
+let buildPath = path.resolve(__dirname, "build");
+
+let filesToCopy = [
+    { from: "./src/index.html" },
+    { from: "./src/styles.css" }
+]
 
 let config = {
     entry: {
@@ -20,7 +25,7 @@ let config = {
         polyfills: polyfillsPath
     },
     output: {
-        // path: buildPath,
+        path: buildPath,
         publicPath: "http://localhost:8080",
         filename: "[name].js"
     },
@@ -82,7 +87,7 @@ let config = {
         new TsConfigPathsPlugin(),
         new CheckerPlugin(),
         new CopyWebpackPlugin(
-            [{ from: "./src/index.html" }], {}
+            filesToCopy, {}
         )
     ]
 };
